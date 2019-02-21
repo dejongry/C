@@ -42,39 +42,40 @@ void initializeBoard(char board[][SIZE])
 }
 
 // Returns true if moving the disc to location row,col is valid; else returns false
-bool isValidMove(char board[][SIZE], int row, int col, char disc)
+bool isValidMove(char board[][SIZE], int col, int row, char disc)
 {
-	int check = 0, i = 0, j = 0;			//will be used to see if every direction has been checked.
+	//int flip = col;
+	//col = row, row = flip;
+	int i = 0, j = 0;			//will be used to see if every direction has been checked.
 	if(disc == BLACK)		//if blacks turn, make sure move can flip white disc
 	{				//need to check every direction
+		if(board[col][row] != EMPTY)
+			return false;
 		if(board[col-1][row-1] == WHITE)	//see if valid diagonally up and left
 		{
+		printf("inside10");
 			for(i=row-2,j=col-2;i>-1 && j>-1;i--,j--)
 			{
 				if(board[j][i] == BLACK)
 					return true;
-				else if(board[j][i] == WHITE){
-				}	//continue
+				else if(board[j][i] == WHITE){}
+					//continue
 				else
-				{
-					i=-2;
-					check++;
-				}
+					i = -1;
 			}
 		}
 		if(board[col][row-1] == WHITE)		//straight up
 		{
 			for(int i=row-2;i>-1;i--)
 			{
+		printf("inside21");
 				if(board[col][i] == BLACK)
 					return true;
 				else if(board[col][i] == WHITE){}
 					//continue
 				else
-				{
-					i = -2;
-					check++;
-				}
+		printf("inside20");
+					i = -1;
 			}
 		}
 		if(board[col+1][row-1] == WHITE)	//diagonally up and right
@@ -86,28 +87,34 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[j][i] == WHITE){}
 					//continue
 				else
-				{
-					i = -2;
-					check++;
-				}
+					i = -1;
+
 			}
 		}
 		if(board[col-1][row] == WHITE)		//straight left
 		{
+		printf("inside12");
 			for(int j = col-2; j>-1; j--)
 			{
+		printf("inside106");
+		printf("\n%d\n",col);
 				if(board[j][row] == BLACK)
+				{
+					printf("inside106");
 					return true;
-				else if(board[col][i] == WHITE){}
+				}
+				else if(board[j][row] == WHITE){printf("ola");
+				}
 					//continue
 				else
-				{
-					check++;
-				}
+				printf("inside60");
+					j = -1;
 			}
+
 		}
 		if(board[col+1][row] == WHITE)		//straight right
 		{
+		printf("inside13");
 			for(int j = col+2; j<8; j++)
 			{
 				if(board[j][row] == BLACK)
@@ -115,9 +122,7 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[j][row] == WHITE){}
 					//continue
 				else
-				{
-					check++;
-				}
+					j = 8;
 			}
 		}
 		if(board[col-1][row+1] == WHITE)	//diagonally down and left
@@ -129,13 +134,12 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[j][i] == WHITE){}
 					//continue
 				else
-				{
-					check++;
-				}
+					i = 8;
 			}
 		}
 		if(board[col][row+1] == WHITE)		//straight down
 		{
+		printf("inside14");
 			for(int i = row+2;i<8;i++)
 			{
 				if(board[col][i] == BLACK)
@@ -143,9 +147,7 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[col][i] == WHITE){}
 					//continue
 				else
-				{
-					check++;
-				}
+					i = 8;
 			}
 		}
 		if(board[col+1][row+1] == WHITE)	//diagonally down and right
@@ -157,15 +159,10 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[j][i] == WHITE){}
 					//continue
 				else
-				{
-					check++;
-				}
+					i = 8;
 			}
 		}
-		if(check==0 || check != 0)
-			return false;			//weird else statement.
 	}
-
 
 	if(disc == WHITE)		//if whites turn, make sure move can flip black disc
 	{				//need to check every direction
@@ -178,9 +175,8 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[j][i] == BLACK){}
 					//continue
 				else
-				{
-					check++;
-				}
+					i = -1;
+
 			}
 		}
 		if(board[col][row-1] == BLACK)		//straight up
@@ -192,9 +188,7 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[col][i] == BLACK){}
 					//continue
 				else
-				{
-					check++;
-				}
+					i = -1;
 			}
 		}
 		if(board[col+1][row-1] == BLACK)	//diagonally up and right
@@ -206,9 +200,7 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[j][i] == BLACK){}
 					//continue
 				else
-				{
-					check++;
-				}
+					i = -1;
 			}
 		}
 		if(board[col-1][row] == BLACK)		//straight left
@@ -217,12 +209,10 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 			{
 				if(board[j][row] == WHITE)
 					return true;
-				else if(board[col][i] == BLACK){}
+				else if(board[j][row] == BLACK){}
 					//continue
 				else
-				{
-					check++;
-				}
+					j = -1;
 			}
 		}
 		if(board[col+1][row] == BLACK)		//straight right
@@ -234,9 +224,7 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[j][row] == BLACK){}
 					//continue
 				else
-				{
-					check++;
-				}
+					j = 8;
 			}
 		}
 		if(board[col-1][row+1] == BLACK)	//diagonally down and left
@@ -248,9 +236,7 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[j][i] == BLACK){}
 					//continue
 				else
-				{
-					check++;
-				}
+					i = 8;
 			}
 		}
 		if(board[col][row+1] == BLACK)		//straight down
@@ -262,9 +248,7 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[col][i] == BLACK){}
 					//continue
 				else
-				{
-					check++;
-				}
+					i = 8;
 			}
 		}
 		if(board[col+1][row+1] == BLACK)	//diagonally down and right
@@ -276,23 +260,22 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 				else if(board[j][i] == BLACK){}
 					//continue
 				else
-				{
-					check++;
-				}
+					i = 8;
 			}
 		}
-		if(check==0 || check != 0)
-			return false;			//weird else statement.
 	}
 	return false;	// REPLACE THIS WITH YOUR IMPLEMENTATION
 }
 
 // Places the disc at location row,col and flips the opponent discs as needed
-void placeDiscAt(char board[][SIZE], int row, int col, char disc)
+void placeDiscAt(char board[][SIZE], int col, int row, char disc)
 {
-int i = 0, j = 0;	//i and j used in loops to determine if discs need to be flipped
-int rLoc, cLoc;			//used in loops later to flip discs
-	if(isValidMove(board, row, col, disc))
+	//int flip = col;
+	//col = row, row = flip;		//i wrote my code originally for board[col][row]
+	int i = 0, j = 0;	//i and j used in loops to determine if discs need to be flipped
+	int rLoc, cLoc;			//used in loops later to flip discs
+	printf("%d, %d, %d\n", row, col, board[col][row]);
+	if(isValidMove(board, col, row, disc))
 	{
 		board[col][row] = disc;
 		
@@ -320,6 +303,7 @@ int rLoc, cLoc;			//used in loops later to flip discs
 			}
 			if(board[col][row-1] == WHITE)		//straight up
 			{
+				printf("inside1");
 				for(int i=row-2;i>-1;i--)
 				{
 					if(board[col][i] == BLACK)
@@ -362,13 +346,14 @@ int rLoc, cLoc;			//used in loops later to flip discs
 			{
 				for(int j = col-2; j>-1; j--)
 				{
+				printf("inside2");
 					if(board[j][row] == BLACK)
 					{
 						for(cLoc=j+1;cLoc<=col;cLoc++)
 						{
 							board[cLoc][row] = BLACK;
 						}
-						i = -2;
+						j = -2;
 					}
 					else if(board[col][i] == WHITE){}
 						//continue
@@ -378,17 +363,19 @@ int rLoc, cLoc;			//used in loops later to flip discs
 					}
 				}
 			}
-			if(board[col+1][row] == WHITE)		//straight right
+			if(board[col+1][row] == WHITE)		//if piece 1 space right of placed piece is white, check if there is a black piece farther right
 			{
-				for(int j = col+2; j<8; j++)
-				{
-					if(board[j][row] == BLACK)
+				for(int j = col+2; j<8; j++)		//starts at space 2 to the right of placed piece, will go to either end of board, 
+				{					//empty space, or black piece is found, which ever is first.
+				printf("inside3");
+					if(board[j][row] == BLACK)	//if a black piece is found, start flipping.
 					{
-						for(cLoc=j;cLoc>=col;cLoc--)
-						{
-							board[cLoc][row] = BLACK;
-						}
-						j = 8;
+						for(cLoc=j-1;cLoc>=col;cLoc--)	//flip piece to left of found black piece
+						{				//keep flipping until location of original placed piece is reached
+							board[cLoc][row] = BLACK;	//This doesn't work, but there is no reason I can see why.
+						}					//Only this direction does not work. Flipping straight up works, but only if
+					       						//there is 1 piece that needs to be flipped.	
+						j = 8;				//this stops flipping passed a found black piece.
 					}
 					else if(board[j][row] == WHITE){}
 						//continue
@@ -400,6 +387,7 @@ int rLoc, cLoc;			//used in loops later to flip discs
 			}
 			if(board[col-1][row+1] == WHITE)	//diagonally down and left
 			{
+				printf("inside4");
 				for(i=row+2,j=col-2;i<8 && j>-1;i++,j--)
 				{
 					if(board[j][i] == BLACK)
@@ -420,11 +408,13 @@ int rLoc, cLoc;			//used in loops later to flip discs
 			}
 			if(board[col][row+1] == WHITE)		//straight down
 			{
+				printf("inside5");
 				for(int i = row+2;i<8;i++)
 				{
+					printf("Inside 10\n");
 					if(board[col][i] == BLACK)
 					{
-						for(rLoc=i+1;rLoc<=row;rLoc++)
+						for(rLoc=i-1;rLoc>row;rLoc--)
 						{
 							board[col][rLoc] = BLACK;
 						}
@@ -531,7 +521,7 @@ int rLoc, cLoc;			//used in loops later to flip discs
 						{
 							board[cLoc][row] = WHITE;
 						}
-						j=-2;
+						j = -2;
 					}
 					else if(board[col][i] == BLACK){}
 						//continue
@@ -587,7 +577,7 @@ int rLoc, cLoc;			//used in loops later to flip discs
 				{
 					if(board[col][i] == WHITE)
 					{
-						for(rLoc=i+1;rLoc<=row;rLoc++)
+						for(rLoc=i-1;rLoc>row;rLoc--)
 						{
 							board[col][rLoc] = WHITE;
 						}
@@ -684,8 +674,16 @@ char checkWinner(char board[][SIZE])
 		}
 	}
 	if(black>white)
+	{
 		return BLACK;
+	}
 	else if(white>black)
+	{
 		return WHITE;
-	return EMPTY;	// REPLACE THIS WITH YOUR IMPLEMENTATION
+	}
+	else
+	{
+		return EMPTY;	// REPLACE THIS WITH YOUR IMPLEMENTATION
+	}
 }
+
