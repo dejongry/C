@@ -14,7 +14,7 @@ size_t read_file(char* file_name, char** contents){
 	*contents = (char*) malloc(st.st_size * sizeof(char));
 	size_t num_bytes = fread(*contents, st.st_size, 1, file);
 	fclose(file);
-	return st.st_size;
+	return num_bytes;
 }
 
 /* write_file writes a string of bytes to disk */

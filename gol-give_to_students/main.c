@@ -31,7 +31,6 @@ int main(int argc, char** argv){
 
 	// This char* will hold the bytes read from the file.
 	char* grid_text;
-	printf("1inside here");
 	// Since C has no objects, we can't ask the array how
 	// long it is.  So we must keep track ourselves.
 	size_t bytes_read = read_file(argv[1], &grid_text);	
@@ -39,14 +38,12 @@ int main(int argc, char** argv){
 	int x = grid_text[0];
 	int y = grid_text[1];
 
-	printf("2inside here");
 	// grid holds the game board.  The game board
 	// is x arrays of arrays of length y
 	// Notice that here x refers to the "row" and
 	// y to the "column" if you want to view the
 	// structure that way.
 	char** grid = get_grid(x, y);
-	printf("3inside here");
 
 	printf("Beginning with grid size %d, %d.\n\n", x, y);
 
@@ -76,6 +73,7 @@ int main(int argc, char** argv){
 			case 'q':
 				// Case 'q' results in exiting the game.  We must free
 				// our memory here.
+				free(grid);
 				return 0;
 
 			case 'w':

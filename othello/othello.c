@@ -53,7 +53,6 @@ bool isValidMove(char board[][SIZE], int col, int row, char disc)
 			return false;
 		if(board[col-1][row-1] == WHITE)	//see if valid diagonally up and left
 		{
-		printf("inside10");
 			for(i=row-2,j=col-2;i>-1 && j>-1;i--,j--)
 			{
 				if(board[j][i] == BLACK)
@@ -68,13 +67,11 @@ bool isValidMove(char board[][SIZE], int col, int row, char disc)
 		{
 			for(int i=row-2;i>-1;i--)
 			{
-		printf("inside21");
 				if(board[col][i] == BLACK)
 					return true;
 				else if(board[col][i] == WHITE){}
 					//continue
 				else
-		printf("inside20");
 					i = -1;
 			}
 		}
@@ -93,28 +90,23 @@ bool isValidMove(char board[][SIZE], int col, int row, char disc)
 		}
 		if(board[col-1][row] == WHITE)		//straight left
 		{
-		printf("inside12");
 			for(int j = col-2; j>-1; j--)
 			{
-		printf("inside106");
 		printf("\n%d\n",col);
 				if(board[j][row] == BLACK)
 				{
-					printf("inside106");
 					return true;
 				}
 				else if(board[j][row] == WHITE){printf("ola");
 				}
 					//continue
 				else
-				printf("inside60");
 					j = -1;
 			}
 
 		}
 		if(board[col+1][row] == WHITE)		//straight right
 		{
-		printf("inside13");
 			for(int j = col+2; j<8; j++)
 			{
 				if(board[j][row] == BLACK)
@@ -139,7 +131,6 @@ bool isValidMove(char board[][SIZE], int col, int row, char disc)
 		}
 		if(board[col][row+1] == WHITE)		//straight down
 		{
-		printf("inside14");
 			for(int i = row+2;i<8;i++)
 			{
 				if(board[col][i] == BLACK)
@@ -303,7 +294,6 @@ void placeDiscAt(char board[][SIZE], int col, int row, char disc)
 			}
 			if(board[col][row-1] == WHITE)		//straight up
 			{
-				printf("inside1");
 				for(int i=row-2;i>-1;i--)
 				{
 					if(board[col][i] == BLACK)
@@ -346,7 +336,6 @@ void placeDiscAt(char board[][SIZE], int col, int row, char disc)
 			{
 				for(int j = col-2; j>-1; j--)
 				{
-				printf("inside2");
 					if(board[j][row] == BLACK)
 					{
 						for(cLoc=j+1;cLoc<=col;cLoc++)
@@ -367,7 +356,6 @@ void placeDiscAt(char board[][SIZE], int col, int row, char disc)
 			{
 				for(int j = col+2; j<8; j++)		//starts at space 2 to the right of placed piece, will go to either end of board, 
 				{					//empty space, or black piece is found, which ever is first.
-				printf("inside3");
 					if(board[j][row] == BLACK)	//if a black piece is found, start flipping.
 					{
 						for(cLoc=j-1;cLoc>=col;cLoc--)	//flip piece to left of found black piece
@@ -387,7 +375,6 @@ void placeDiscAt(char board[][SIZE], int col, int row, char disc)
 			}
 			if(board[col-1][row+1] == WHITE)	//diagonally down and left
 			{
-				printf("inside4");
 				for(i=row+2,j=col-2;i<8 && j>-1;i++,j--)
 				{
 					if(board[j][i] == BLACK)
@@ -408,10 +395,8 @@ void placeDiscAt(char board[][SIZE], int col, int row, char disc)
 			}
 			if(board[col][row+1] == WHITE)		//straight down
 			{
-				printf("inside5");
 				for(int i = row+2;i<8;i++)
 				{
-					printf("Inside 10\n");
 					if(board[col][i] == BLACK)
 					{
 						for(rLoc=i-1;rLoc>row;rLoc--)

@@ -7,13 +7,11 @@
  * x is the height and y is the width.
  */
 char** get_grid(int x, int y){
-	printf("inside here1");
 	char** grid = (char**)malloc(x*sizeof(char*));
 	for(int i = 0; i < y; i++)
 	{
 		grid[i] = (char*)malloc(y*sizeof(char));
 	}
-	printf("inside here2");
 	return grid;
 }
 
@@ -23,13 +21,14 @@ char** get_grid(int x, int y){
  * provided by grid
  */
 void print_grid(int x, int y, char** grid){
-	printf("inside here3");
+	printf("\n");
 	for(int i = 0; i<x; i++)
 	{
 		for(int j = 0; j < y; j++)
 		{
-			printf("%c", grid[i][j]);
+			printf("%d", atoi(&grid[i][j]));
 		}
+		printf("\n");
 	}
 }
 
@@ -39,18 +38,13 @@ void print_grid(int x, int y, char** grid){
  * is returned.
  */
 char** mutate(int x, int y, char** grid){
-	printf("inside here4");
 	for(int i = 0; i < x; i++)
 	{
 		for(int j = 0; j < y; j++)
 		{
 			if(grid[i][j] =='1')
 			{
-				if(get_neighbors(i,j,x,y,grid) < 2)
-				{
-					grid[i][j] = '0';
-				}
-				else if(get_neighbors(i,j,x,y,grid) == 2 || get_neighbors(i,j,x,y,grid) == 3)
+				if(get_neighbors(i,j,x,y,grid) == 2 || get_neighbors(i,j,x,y,grid) == 3)
 				{
 					grid[i][j] = '1';
 				}
@@ -68,7 +62,6 @@ char** mutate(int x, int y, char** grid){
 			}
 		}
 	}
-	printf("inside here5");
 	return grid;
 }
 
@@ -77,39 +70,62 @@ char** mutate(int x, int y, char** grid){
  */
 int get_neighbors(int i, int j, int x, int y, char** grid)
 {
-	printf("inside here6");
 	int neighbors = 0;
-	if(grid[x-1][y-1] == '1')	//need to check every direction. Up and left.
+	if(i>0 && j >0)
 	{
-		neighbors++;
+		if(grid[i-1][j-1] == '1')	//need to check every direction. Up and left.
+		{
+			neighbors++;
+		}
 	}
-	if(grid[x-1][y] == '1')		//Straight up.
+	if(i>0)
 	{
-		neighbors++;
+		if(grid[i-1][j] == '1')		//Straight up.
+		{
+			neighbors++;
+		}
 	}
-	if(grid[x-1][y+1] == '1')	//Up and Right.
+	if(i>0 && j < y)
 	{
-		neighbors++;
+		if(grid[i-1][j+1] == '1')	//Up and Right.
+		{
+			neighbors++;
+		}
 	}
-	if(grid[x][y-1] == '1')		//Straight Left.
+	if(j>0)
 	{
-		neighbors++;
-	}	
-	if(grid[x][y+1] == '1')		//Straight right.
-	{
-		neighbors++;
+		if(grid[i][j-1] == '1')		//Straight Left.
+		{
+			neighbors++;
+		}
 	}
-	if(grid[x+1][y-1] == '1')	//Down and Left.
-	{
-		neighbors++;
+	if(j<y)
+	{	
+		if(grid[i][j+1] == '1')		//Straight right.
+		{
+			neighbors++;
+		}
 	}
-	if(grid[x+1][y] == '1')		//Straight Down.
+	if(i<x && j>0)
 	{
-		neighbors++;
+		if(grid[i+1][j-1] == '1')	//Down and Left.
+		{
+			neighbors++;
+		}
 	}
-	if(grid[x+1][y+1] == '1')	//Down and RIght.
+	if(i<x)
 	{
-		neighbors++;
+		if(grid[i+1][j] == '1')		//Straight Down.
+		{
+			neighbors++;
+		}
+	}
+	if(i<x && j<y)
+	{
+		if(grid[i+1][j+1] == '1')	//Down and RIght.
+		{
+			neighbors++;
+		}
 	}
 	return neighbors;
 }
